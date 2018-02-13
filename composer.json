@@ -1,0 +1,9 @@
+{
+    "name": "tamkeenlms/tamkeelms-api",
+    "description": "The API for Tamkeen LMS ()\u001b[Dtamkeenlms.com)",
+    "type": "library",
+    "minimum-stability": "stable",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}

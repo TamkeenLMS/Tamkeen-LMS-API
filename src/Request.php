@@ -1,6 +1,7 @@
 <?php namespace TamkeenLMSAPI;
 
 	use GuzzleHttp\Client;
+	use TamkeenLMSAPI\Exception\LimitReachedException;
 
 	/**
 	 * @package TamkeenLMSAPI
@@ -35,9 +36,19 @@
 		 * @param $path
 		 * @param string $method
 		 */
-		public function __construct($path, $method = 'GET'){
-			$this->method = strtoupper($method);
+		public function __construct($path, $method = null){
+			$this->method = strtoupper($method ?: 'get');
 			$this->path = $path;
+		}
+
+		/**
+		 * @param $path
+		 * @param $method
+		 *
+		 * @return static
+		 */
+		public static function make($path, $method){
+			return (new static($path, $method));
 		}
 
 		/**
@@ -57,7 +68,13 @@
 				'form_params' => $this->formParams
 			]);
 
+			// If the limit was reached
+			if($response->getStatusCode() == 429){
+				throw new LimitReachedException(); }
+
 			// Decode the response
-			return \GuzzleHttp\json_decode((string) $response->getBody());
+			$response = \GuzzleHttp\json_decode((string) $response->getBody());
+
+			return $response;
 		}
 	}

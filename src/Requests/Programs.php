@@ -8,9 +8,10 @@
 	class Programs{
 		/**
 		 * @param $branchId
-		 * @param string $categoryId
+		 * @param $categoryId
+		 * @param $page
 		 */
-		public function get($branchId, $categoryId, $page){
+		public function get($branchId, $categoryId, $page = 1){
 			$request = new Request('programs');
 
 			// Attach the branch and the category ids
@@ -33,6 +34,19 @@
 
 			// Attach the branch id
 			$request->query['branch'] = $branchId;
+
+			return $request->send();
+		}
+
+		/**
+		 * @param array $data
+		 *
+		 * @return mixed
+		 * @throws \TamkeenLMSAPI\Exception\LimitReachedException
+		 */
+		public function signup(array $data){
+			$request = new Request('programs/signup', 'POST');
+			$request->formParams =  $data;
 
 			return $request->send();
 		}

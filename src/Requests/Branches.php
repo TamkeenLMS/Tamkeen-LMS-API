@@ -1,18 +1,19 @@
 <?php namespace TamkeenLMSAPI\Requests;
 
-	use TamkeenLMSAPI\Request;
-
 	/**
 	 * @package TamkeenLMSAPI\Requests
 	 */
-	class Programs{
+	class Branches extends Request{
+		/**
+		 */
+		public function __construct(){
+			parent::__construct('branches');
+		}
+
 		/**
 		 * @return mixed
-		 * @throws \TamkeenLMSAPI\Exception\LimitReachedException
 		 */
 		public function get(){
-			$request = new Request('branches');
-
-			return $request->send();
+			return $this->send();
 		}
 	}

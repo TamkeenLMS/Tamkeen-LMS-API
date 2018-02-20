@@ -13,7 +13,7 @@ This is the documentation for the official [Tamkeen LMS](tamkeenlms.com) API cli
 # Installation
 You can install this library using Composer:
 ```
-composer require tamkeenlms/api
+composer require tamkeenlms/tamkeelms-api
 ```
 
 Now, in your code you will need to initiate the API by setting up the basic request information i.e the API key and the base URI for the API.

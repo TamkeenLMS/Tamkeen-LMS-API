@@ -1,5 +1,5 @@
 # About
-This is the documentation for the official [Tamkeen LMS](tamkeenlms.com) API client. You can use this API client to do a couple of simple operations like retrieving the programs and submitting a new request for one of these programs.
+This is the documentation for the official [Tamkeen LMS](https://tamkeenlms.com) API client. You can use this API client to do a couple of simple operations like retrieving the programs and submitting a new request for one of these programs.
 
 - Tamkeen LMS API is available for you to access through HTTP, this means that you can call it via any cURL library using any programming language.
 - You MUST pass the API key with EVERY request. This key will be given to you by the Tamkeen team. But notice that this key can and will be changed from time to time, specially with new updates.

@@ -79,12 +79,12 @@ The response returned will look like this:
       "from":1,
       "to":2,
       "data":[
-         { // The WEBSITE program
+         {
             "id":1,
             "program_id":1,
             "category_id":1,
             "about":"HTML information about this program ....",
-            "program":{ // The PROGRAM itself
+            "program":{
                "id":1,
                "name":"Program 1 name",
                "cost":"300.00",

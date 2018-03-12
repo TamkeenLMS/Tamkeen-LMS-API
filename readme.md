@@ -31,7 +31,11 @@ The API key will be given to you by the copy owner or by Tamkeen LMS team.
 # Requests
 
 ### Getting the company's list of branches
-Tamkeen supports working with multiple branches (locations of the same company or organization), each branch has its own courses, courses, lectures ... etc, and of course its own list of website courses. So you will need to represent this on your application and separate between the data from each branch. This request returns a list of the branches added on the system, each with the id and the name. You will need to use this request to fetch a list of the branches so that the user could pick from when for exampling signing up for a course.
+Tamkeen supports working with multiple branches (locations of the same company or organization), 
+each branch has its own courses, batches, lectures ... etc, and of course its own list of website courses. 
+So you will need to represent this on your application and separate between the data from each branch. 
+This request returns a list of the branches added on the system, each with the id and the name. 
+You will need to use this request to fetch a list of the branches so that the user could pick from when for exampling signing up for a course.
 
 Example:
 ```php
@@ -45,11 +49,9 @@ Example response:
    "branches":[
       {
          "id":1,
-         "name":"Branch 1"
-      },
-      {
-         "id":2,
-         "name":"Branch 2"
+         "name":"Branch 1",
+         "code":"HQ",
+         "currency":"EGP"
       }
    ]
 }
@@ -57,7 +59,9 @@ Example response:
 
 
 ### Getting the courses
-First you need to understand that we have two different data models here; a `Course` and a `Website Progam`. A course is the training course registered on the system, and a `Website Course` is the model which encapsulates the Course and carries its properties on the website, that IF it was SELECTED to be shown on the website! So, the returned list will hold both the Course and the Website Course, the first being passed within the later one as shown below in the sample request.
+First you need to understand that we have two different data models here; a `Course` and a `Website Course`. A course
+ is
+the training course registered on the system, and a `Website Course` is the model which encapsulates the Course and carries its properties on the website, that IF it was SELECTED to be shown on the website! So, the returned list will hold both the Course and the Website Course, the first being passed within the later one as shown below in the sample request.
 
 Tamkeen LMS supports multi branches, so each course is added to the application is added __under__ a branch, also the courses are grouped by categories. So, when fetching any group of courses you will need to pass ids of both the branch and the category. As for the the ids for the branch and the category you can retrieve them through other requests mentioned below.
 
@@ -88,19 +92,9 @@ The response returned will look like this:
                "id":1,
                "name":"Course 1 name",
                "cost":"300.00",
-               "cost_basis":"lecture"
-            }
-         },
-         {
-            "id":3,
-            "course_id":2,
-            "category_id":1,
-            "about":null,
-            "course":{
-               "id":2,
-               "name":"Course 2 name",
-               "cost":"5000.00",
-               "cost_basis":"trainee"
+               "cost_basis":"lecture",
+               "duration":"30",
+               "duration_unit":"day"
             }
          }
       ]
@@ -112,6 +106,14 @@ As you can see, the response returned accounts for pagination, which means you c
 ```php
 $request = new TamkeenLMSAPI\Requests\Courses\Courses([branch id], [category id]);
 $request->setPage([page numver]); // The page number
+```
+
+### Getting one course
+You can fetch the information of one course only through this request
+
+```php
+$request = new TamkeenLMSAPI\Requests\Courses\Course([course id]);
+$response = $request->get();
 ```
 
 ### Getting the courses categories
@@ -173,7 +175,7 @@ The information you will send via the API will pass a strict validation rules, a
 ```
 You can display these error messages for the user so that he could check his/her input for the returned errors.
 
-If the signup process was successfull the API will return:
+If the signup process was successful the API will return:
 ```json
 {
    "message":"success"

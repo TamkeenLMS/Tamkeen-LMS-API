@@ -1,4 +1,6 @@
-<?php namespace TamkeenLMSAPI\Requests;
+<?php namespace TamkeenLMSAPI\Requests\Branches;
+
+	use TamkeenLMSAPI\Requests\Request;
 
 	/**
 	 * @package TamkeenLMSAPI\Requests

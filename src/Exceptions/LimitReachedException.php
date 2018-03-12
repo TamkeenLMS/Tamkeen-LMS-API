@@ -1,3 +1,3 @@
-<?php namespace TamkeenLMSAPI\Exception;
+<?php namespace TamkeenLMSAPI\Exceptions;
 
 	class LimitReachedException extends \Exception{}

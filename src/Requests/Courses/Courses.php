@@ -1,17 +1,17 @@
-<?php namespace TamkeenLMSAPI\Requests\Programs;
+<?php namespace TamkeenLMSAPI\Requests\Courses;
 
 	use TamkeenLMSAPI\Requests\Request;
 
 	/**
-	 * @package TamkeenLMSAPI\Requests\Programs
+	 * @package TamkeenLMSAPI\Requests\Courses
 	 */
-	class Programs extends Request{
+	class Courses extends Request{
 		/**
 		 * @param $branchId
 		 * @param $categoryId
 		 */
 		public function __construct($branchId, $categoryId){
-			parent::__construct('programs');
+			parent::__construct('courses');
 
 			// Set the branch
 			$this->setBranch($branchId);
@@ -21,7 +21,7 @@
 		}
 
 		/**
-		 * Passes the id of the programs category from which the programs should be retrieved
+		 * Passes the id of the courses category from which the courses should be retrieved
 		 * @param $categoryId
 		 *
 		 * @return $this

@@ -1,16 +1,16 @@
-<?php namespace TamkeenLMSAPI\Requests\Programs;
+<?php namespace TamkeenLMSAPI\Requests\Courses;
 
 	use TamkeenLMSAPI\Requests\Request;
 
 	/**
-	 * @package TamkeenLMSAPI\Requests\Programs
+	 * @package TamkeenLMSAPI\Requests\Courses
 	 */
 	class Categories extends Request{
 		/**
 		 * @param null $branchId
 		 */
 		public function __construct($branchId){
-			parent::__construct('programs/categories');
+			parent::__construct('courses/categories');
 
 			// Set the branch of the request
 			$this->setBranch($branchId);

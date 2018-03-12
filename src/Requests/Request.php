@@ -1,7 +1,7 @@
 <?php namespace TamkeenLMSAPI\Requests;
 
 	use TamkeenLMSAPI\Client;
-	use TamkeenLMSAPI\Exception\LimitReachedException;
+	use TamkeenLMSAPI\Exceptions\LimitReachedException;
 
 	/**
 	 * @package TamkeenLMSAPI

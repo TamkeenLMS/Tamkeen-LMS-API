@@ -1,12 +1,12 @@
 # About
-This is the documentation for the official [Tamkeen LMS](https://tamkeenlms.com) API client. You can use this API client to do a couple of simple operations like retrieving the programs and submitting a new request for one of these programs.
+This is the documentation for the official [Tamkeen LMS](https://tamkeenlms.com) API client. You can use this API client to do a couple of simple operations like retrieving the courses and submitting a new request for one of these courses.
 
-- Tamkeen LMS API is available for you to access through HTTP, this means that you can call it via any cURL library using any programming language.
+- Tamkeen LMS API is available for you to access through HTTP, this means that you can call it via any cURL library using any courseming language.
 - You MUST pass the API key with EVERY request. This key will be given to you by the Tamkeen team. But notice that this key can and will be changed from time to time, specially with new updates.
 - The response will always be in JSON format.
 - The API has a throttling limit of 1000 requests per minite. After that you will need to wait for a full minute before being able to submit another request. The response in this case will be "Too Many Attempts.", and the status code will be 429.
-- With any request you send you can ask for a specific language locale for the response. The available locales right now are "en" and "ar". This will be usefull whenever the response carries text, like with the validation messages. You can set the locale for each request by passing "locale=[locale]" in the URL's query string. Example: `POST api/v1/programs/signup?locale=ar`.
-- Most of the requests require you to specify the branch on which the request should be performed. Like when asking the API for the programs list, you MUST specify the `id` of the branch from which you need to get the programs in the request. This is done by passing the branch's `id` in the url query string. Example: Example: `GET api/v1/programs?branch=1`.
+- With any request you send you can ask for a specific language locale for the response. The available locales right now are "en" and "ar". This will be usefull whenever the response carries text, like with the validation messages. You can set the locale for each request by passing "locale=[locale]" in the URL's query string. Example: `POST api/v1/courses/signup?locale=ar`.
+- Most of the requests require you to specify the branch on which the request should be performed. Like when asking the API for the courses list, you MUST specify the `id` of the branch from which you need to get the courses in the request. This is done by passing the branch's `id` in the url query string. Example: Example: `GET api/v1/courses?branch=1`.
 - You can get yourself familiar with the API by simply requesting the API's URLs in the browser or via tools like [Postman](https://www.getpostman.com/).
 
 
@@ -31,7 +31,7 @@ The API key will be given to you by the copy owner or by Tamkeen LMS team.
 # Requests
 
 ### Getting the company's list of branches
-Tamkeen supports working with multiple branches (locations of the same company or organization), each branch has its own programs, courses, lectures ... etc, and of course its own list of website programs. So you will need to represent this on your application and separate between the data from each branch. This request returns a list of the branches added on the system, each with the id and the name. You will need to use this request to fetch a list of the branches so that the user could pick from when for exampling signing up for a program.
+Tamkeen supports working with multiple branches (locations of the same company or organization), each branch has its own courses, courses, lectures ... etc, and of course its own list of website courses. So you will need to represent this on your application and separate between the data from each branch. This request returns a list of the branches added on the system, each with the id and the name. You will need to use this request to fetch a list of the branches so that the user could pick from when for exampling signing up for a course.
 
 Example:
 ```php
@@ -56,20 +56,20 @@ Example response:
 ```
 
 
-### Getting the programs
-First you need to understand that we have two different data models here; a `Program` and a `Website Progam`. A program is the training program registered on the system, and a `Website Program` is the model which encapsulates the Program and carries its properties on the website, that IF it was SELECTED to be shown on the website! So, the returned list will hold both the Program and the Website Program, the first being passed within the later one as shown below in the sample request.
+### Getting the courses
+First you need to understand that we have two different data models here; a `Course` and a `Website Progam`. A course is the training course registered on the system, and a `Website Course` is the model which encapsulates the Course and carries its properties on the website, that IF it was SELECTED to be shown on the website! So, the returned list will hold both the Course and the Website Course, the first being passed within the later one as shown below in the sample request.
 
-Tamkeen LMS supports multi branches, so each program is added to the application is added __under__ a branch, also the programs are grouped by categories. So, when fetching any group of programs you will need to pass ids of both the branch and the category. As for the the ids for the branch and the category you can retrieve them through other requests mentioned below.
+Tamkeen LMS supports multi branches, so each course is added to the application is added __under__ a branch, also the courses are grouped by categories. So, when fetching any group of courses you will need to pass ids of both the branch and the category. As for the the ids for the branch and the category you can retrieve them through other requests mentioned below.
 
 ```php
-$request = new TamkeenLMSAPI\Requests\Programs\Programs([branch id], [category id]);
+$request = new TamkeenLMSAPI\Requests\Courses\Courses([branch id], [category id]);
 $response = $request->get();
 ```
 
 The response returned will look like this:
 ```json
 {
-   "programs":{
+   "courses":{
       "total":2,
       "per_page":20,
       "current_page":1,
@@ -81,24 +81,24 @@ The response returned will look like this:
       "data":[
          {
             "id":1,
-            "program_id":1,
+            "course_id":1,
             "category_id":1,
-            "about":"HTML information about this program ....",
-            "program":{
+            "about":"HTML information about this course ....",
+            "course":{
                "id":1,
-               "name":"Program 1 name",
+               "name":"Course 1 name",
                "cost":"300.00",
                "cost_basis":"lecture"
             }
          },
          {
             "id":3,
-            "program_id":2,
+            "course_id":2,
             "category_id":1,
             "about":null,
-            "program":{
+            "course":{
                "id":2,
-               "name":"Program 2 name",
+               "name":"Course 2 name",
                "cost":"5000.00",
                "cost_basis":"trainee"
             }
@@ -108,17 +108,17 @@ The response returned will look like this:
 }
 
 ```
-As you can see, the response returned accounts for pagination, which means you can simply paginate through the programs simply by passing the page's number in the uri. Example: `GET programs?branch=1&category=1&page=2` This request will return the page 2 of the full list. Each page has 20 programs.
+As you can see, the response returned accounts for pagination, which means you can simply paginate through the courses simply by passing the page's number in the uri. Example: `GET courses?branch=1&category=1&page=2` This request will return the page 2 of the full list. Each page has 20 courses.
 ```php
-$request = new TamkeenLMSAPI\Requests\Programs\Programs([branch id], [category id]);
+$request = new TamkeenLMSAPI\Requests\Courses\Courses([branch id], [category id]);
 $request->setPage([page numver]); // The page number
 ```
 
-### Getting the programs categories
-The programs are categorized on Tamkeen LMS end, and when retrieving a list of the programs you will need to specify the category for the targeted programs, by id. Here is how to fetch the full list of these categories:
+### Getting the courses categories
+The courses are categorized on Tamkeen LMS end, and when retrieving a list of the courses you will need to specify the category for the targeted courses, by id. Here is how to fetch the full list of these categories:
 
 ```php
-$request = new TamkeenLMSAPI\Requests\Programs\Categories([branch id]);
+$request = new TamkeenLMSAPI\Requests\Courses\Categories([branch id]);
 $response = $request->get();
 ```
 
@@ -140,17 +140,17 @@ Example response:
 }
 ```
 
-### Submitting a program request (sign up)
-Through your application and using our API you can list and view the programs stored on Tamkeen LMS's database, but also you can submit a program request (made by one of your app's users) to be stored and viewed on our end. You will be responsible for building the form and validating the user's input, and then submit it to us. Of course you will need to attach the id of the program (which the user requested, and which represents the `Website program`, not the `Program` itself) along with the request.
+### Submitting a course request (sign up)
+Through your application and using our API you can list and view the courses stored on Tamkeen LMS's database, but also you can submit a course request (made by one of your app's users) to be stored and viewed on our end. You will be responsible for building the form and validating the user's input, and then submit it to us. Of course you will need to attach the id of the course (which the user requested, and which represents the `Website course`, not the `Course` itself) along with the request.
 
-The data you can ask for in your form is: the program (=program_id), name (=name), phone number (=phone_number), email (=email), the job title (=job_title), note (=note). Of course only the program_id, name, and phone_number values are required. You don't need to submit the id of the branch here because we can find it based on the program you selected.
+The data you can ask for in your form is: the course (=course_id), name (=name), phone number (=phone_number), email (=email), the job title (=job_title), note (=note). Of course only the course_id, name, and phone_number values are required. You don't need to submit the id of the branch here because we can find it based on the course you selected.
 
-The user when submitted will be added to a temporary list on under the specified website program, and after filtering can be added to the program's actual waiting list on the application.
+The user when submitted will be added to a temporary list on under the specified website course, and after filtering can be added to the course's actual waiting list on the application.
 
 Example:
 ```php
-$request = new TamkeenLMSAPI\Requests\Programs\Signup([
-	'program_id' => $_POST['program_id'],
+$request = new TamkeenLMSAPI\Requests\Courses\Signup([
+	'course_id' => $_POST['course_id'],
 	'name' => $_POST['name'],
 	'phone_number' => $_POST['phone_number'],
 	'email' => $_POST['email'],
